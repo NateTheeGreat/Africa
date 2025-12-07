@@ -17,16 +17,17 @@
             font-family: 'Inter', sans-serif;
         }
 
-        /* Remove all margins and padding for fullscreen embed */
+        /* Essential fix for embedding: setting height to auto allows parent window to scroll content */
         html,
         body {
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100%;
+            height: auto;
             overflow-x: hidden;
         }
 
+        /* Existing Styles */
         .parallax {
             background-attachment: fixed;
             background-position: center;
@@ -82,29 +83,44 @@
             border-left: 4px solid #f7931a;
         }
     </style>
+
+    <script>
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                // 1. Smoothly scroll the element into view within the iframe itself.
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                // 2. Update the URL hash. This is the critical part, as Google Sites often reads the
+                //    hash change in the iframe and correctly scrolls the main parent page.
+                window.location.hash = id;
+            }
+        }
+    </script>
 </head>
 
 <body class="bg-black text-gray-100">
 
-    <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 border-b border-gray-800">
         <div class="max-w-7xl mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
                 <h1 class="text-2xl font-bold gradient-text">IC 420 Portfolio</h1>
                 <div class="flex gap-6">
-                    <a href="#about" class="text-gray-300 hover:text-[#f7931a] transition-colors duration-300">About</a>
-                    <a href="#lo1" class="text-gray-300 hover:text-[#f7931a] transition-colors duration-300">LO1:
+                    <a onclick="scrollToSection('about')"
+                        class="text-gray-300 hover:text-[#f7931a] transition-colors duration-300 cursor-pointer">About</a>
+                    <a onclick="scrollToSection('lo1')"
+                        class="text-gray-300 hover:text-[#f7931a] transition-colors duration-300 cursor-pointer">LO1:
                         Representations</a>
-                    <a href="#lo2" class="text-gray-300 hover:text-[#f7931a] transition-colors duration-300">LO2:
+                    <a onclick="scrollToSection('lo2')"
+                        class="text-gray-300 hover:text-[#f7931a] transition-colors duration-300 cursor-pointer">LO2:
                         Kinship</a>
-                    <a href="#recommendations"
-                        class="text-gray-300 hover:text-[#f7931a] transition-colors duration-300">Recommendations</a>
+                    <a onclick="scrollToSection('recommendations')"
+                        class="text-gray-300 hover:text-[#f7931a] transition-colors duration-300 cursor-pointer">Recommendations</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section with Parallax -->
     <section id="hero" class="relative h-screen flex items-center justify-center overflow-hidden">
         <div class="parallax-layer" id="hero-parallax"
             style="background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(247,147,26,0.3)), url('https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1920&q=80') center/cover;">
@@ -114,18 +130,16 @@
             <p class="text-2xl text-gray-300 mb-8 font-light">IC 420 Summative Project E-Portfolio</p>
             <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-12">An immersive exploration of African
                 representations, kinship structures, and cultural narratives</p>
-            <a href="#about"
-                class="inline-block bg-[#f7931a] text-black px-8 py-4 rounded-full font-bold text-lg hover:bg-[#ffd700] transition-all duration-300 glow-effect">Explore
+            <a onclick="scrollToSection('about')"
+                class="inline-block bg-[#f7931a] text-black px-8 py-4 rounded-full font-bold text-lg hover:bg-[#ffd700] transition-all duration-300 glow-effect cursor-pointer">Explore
                 My Journey</a>
         </div>
     </section>
 
-    <!-- Section Divider 1 -->
     <div class="section-divider parallax"
         style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1523805009345-7448845a9e53?w=1920&q=80') center/cover;">
     </div>
 
-    <!-- About Me Section -->
     <section id="about" class="py-24 bg-gradient-to-b from-gray-900 to-black">
         <div class="max-w-5xl mx-auto px-6">
             <div class="text-center mb-16">
@@ -160,12 +174,10 @@
         </div>
     </section>
 
-    <!-- Section Divider 2 -->
     <div class="section-divider parallax"
         style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?w=1920&q=80') center/cover;">
     </div>
 
-    <!-- Learning Outcome 1: Representations -->
     <section id="lo1" class="py-24 bg-black">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center mb-16">
@@ -174,7 +186,6 @@
                 <div class="w-24 h-1 bg-[#f7931a] mx-auto rounded-full"></div>
             </div>
 
-            <!-- Reflection -->
             <div class="reflection-section rounded-2xl p-10 mb-16 hover-lift">
                 <h4 class="text-2xl font-bold text-[#f7931a] mb-6">Critical Reflection</h4>
                 <div class="text-gray-300 text-lg leading-relaxed space-y-4">
@@ -221,17 +232,14 @@
                 </div>
             </div>
 
-            <!-- Visual Context -->
             <div class="mb-16">
                 <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=1200&q=80"
                     alt="Media representations analysis" class="rounded-2xl shadow-2xl w-full hover-lift">
             </div>
 
-            <!-- Artifacts -->
             <div>
                 <h4 class="text-3xl font-bold text-[#f7931a] mb-8">Supporting Artifacts</h4>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Artifact 1 -->
                     <div class="artifact-card rounded-xl p-6 hover-lift">
                         <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&q=80"
                             alt="Achebe critical essay" class="rounded-lg mb-4 w-full">
@@ -241,7 +249,6 @@
                             colonial stereotypes and the implications for contemporary representations.</p>
                     </div>
 
-                    <!-- Artifact 2 -->
                     <div class="artifact-card rounded-xl p-6 hover-lift">
                         <img src="https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=800&q=80"
                             alt="Media analysis project" class="rounded-lg mb-4 w-full">
@@ -251,7 +258,6 @@
                             covering the same events, revealing bias and framing differences.</p>
                     </div>
 
-                    <!-- Artifact 3 -->
                     <div class="artifact-card rounded-xl p-6 hover-lift">
                         <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&q=80"
                             alt="Film review" class="rounded-lg mb-4 w-full">
@@ -261,7 +267,6 @@
                             representations and imagines African-centered futures.</p>
                     </div>
 
-                    <!-- Artifact 4 -->
                     <div class="artifact-card rounded-xl p-6 hover-lift">
                         <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=800&q=80"
                             alt="Literature response" class="rounded-lg mb-4 w-full">
@@ -271,7 +276,6 @@
                             readings and my own experiences with stereotypes.</p>
                     </div>
 
-                    <!-- Artifact 5 -->
                     <div class="artifact-card rounded-xl p-6 hover-lift">
                         <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80"
                             alt="Visual essay" class="rounded-lg mb-4 w-full">
@@ -285,12 +289,10 @@
         </div>
     </section>
 
-    <!-- Section Divider 3 -->
     <div class="section-divider parallax"
         style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=1920&q=80') center/cover;">
     </div>
 
-    <!-- Learning Outcome 2: Kinship and the Family -->
     <section id="lo2" class="py-24 bg-gradient-to-b from-gray-900 to-black">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center mb-16">
@@ -299,7 +301,6 @@
                 <div class="w-24 h-1 bg-[#f7931a] mx-auto rounded-full"></div>
             </div>
 
-            <!-- Reflection -->
             <div class="reflection-section rounded-2xl p-10 mb-16 hover-lift">
                 <h4 class="text-2xl font-bold text-[#f7931a] mb-6">Critical Reflection</h4>
                 <div class="text-gray-300 text-lg leading-relaxed space-y-4">
@@ -345,17 +346,14 @@
                 </div>
             </div>
 
-            <!-- Visual Context -->
             <div class="mb-16">
                 <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1200&q=80"
                     alt="Kinship structures visualization" class="rounded-2xl shadow-2xl w-full hover-lift">
             </div>
 
-            <!-- Artifacts -->
             <div>
                 <h4 class="text-3xl font-bold text-[#f7931a] mb-8">Supporting Artifacts</h4>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Artifact 1 -->
                     <div class="artifact-card rounded-xl p-6 hover-lift">
                         <img src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=800&q=80"
                             alt="Kinship diagram" class="rounded-lg mb-4 w-full">
@@ -365,7 +363,6 @@
                             among the Akan people, showing inheritance and authority flows.</p>
                     </div>
 
-                    <!-- Artifact 2 -->
                     <div class="artifact-card rounded-xl p-6 hover-lift">
                         <img src="https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?w=800&q=80"
                             alt="Ethnography summary" class="rounded-lg mb-4 w-full">
@@ -375,7 +372,6 @@
                             practices and their social functions in East African societies.</p>
                     </div>
 
-                    <!-- Artifact 3 -->
                     <div class="artifact-card rounded-xl p-6 hover-lift">
                         <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80"
                             alt="Case study" class="rounded-lg mb-4 w-full">
@@ -385,7 +381,6 @@
                             environments and continue to provide social support.</p>
                     </div>
 
-                    <!-- Artifact 4 -->
                     <div class="artifact-card rounded-xl p-6 hover-lift">
                         <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80"
                             alt="Comparative analysis" class="rounded-lg mb-4 w-full">
@@ -395,7 +390,6 @@
                             descent systems for gender roles and property rights.</p>
                     </div>
 
-                    <!-- Artifact 5 -->
                     <div class="artifact-card rounded-xl p-6 hover-lift">
                         <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&q=80"
                             alt="Interview project" class="rounded-lg mb-4 w-full">
@@ -409,12 +403,10 @@
         </div>
     </section>
 
-    <!-- Section Divider 4 -->
     <div class="section-divider parallax"
         style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1541480601022-2308c0f02487?w=1920&q=80') center/cover;">
     </div>
 
-    <!-- More on Africa: Recommendations -->
     <section id="recommendations" class="py-24 bg-black">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center mb-16">
@@ -427,7 +419,6 @@
                 </p>
             </div>
 
-            <!-- Literature -->
             <div class="mb-16">
                 <h4 class="text-3xl font-bold text-[#f7931a] mb-8 flex items-center">
                     <span class="mr-4">📚</span> Literature
@@ -460,7 +451,6 @@
                 </div>
             </div>
 
-            <!-- Film -->
             <div class="mb-16">
                 <h4 class="text-3xl font-bold text-[#f7931a] mb-8 flex items-center">
                     <span class="mr-4">🎬</span> Film
@@ -493,7 +483,6 @@
                 </div>
             </div>
 
-            <!-- Music -->
             <div class="mb-16">
                 <h4 class="text-3xl font-bold text-[#f7931a] mb-8 flex items-center">
                     <span class="mr-4">🎵</span> Music
@@ -511,132 +500,16 @@
                         <p class="text-gray-300 text-sm">Versatile performer blending traditional West African music
                             with contemporary genres, advocating for women's rights.</p>
                     </div>
-                    <div class="artifact-card rounded-xl p-6 hover-lift">
-                        <h5 class="text-xl font-bold text-white mb-2">Burna Boy</h5>
-                        <p class="text-gray-400 mb-2">Afrofusion Star (Nigeria)</p>
-                        <p class="text-gray-300 text-sm">Contemporary artist bringing African sounds to global audiences
-                            while addressing social and political issues.</p>
-                    </div>
-                    <div class="artifact-card rounded-xl p-6 hover-lift">
-                        <h5 class="text-xl font-bold text-white mb-2">Tinariwen</h5>
-                        <p class="text-gray-400 mb-2">Desert Blues Band (Mali)</p>
-                        <p class="text-gray-300 text-sm">Tuareg musicians whose hypnotic guitar-driven sound reflects
-                            nomadic traditions and political resistance.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Podcasts -->
-            <div>
-                <h4 class="text-3xl font-bold text-[#f7931a] mb-8 flex items-center">
-                    <span class="mr-4">🎙️</span> Podcasts
-                </h4>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="artifact-card rounded-xl p-6 hover-lift">
-                        <h5 class="text-xl font-bold text-white mb-2">Africa Past & Present</h5>
-                        <p class="text-gray-400 mb-2">Academic Podcast</p>
-                        <p class="text-gray-300 text-sm">Scholarly discussions on African history, politics, and culture
-                            featuring leading experts and researchers.</p>
-                    </div>
-                    <div class="artifact-card rounded-xl p-6 hover-lift">
-                        <h5 class="text-xl font-bold text-white mb-2">The Noire Histoir</h5>
-                        <p class="text-gray-400 mb-2">History & Culture</p>
-                        <p class="text-gray-300 text-sm">Exploring untold stories from African and African diaspora
-                            history with engaging storytelling.</p>
-                    </div>
-                    <div class="artifact-card rounded-xl p-6 hover-lift">
-                        <h5 class="text-xl font-bold text-white mb-2">Everyday Africa</h5>
-                        <p class="text-gray-400 mb-2">Contemporary Issues</p>
-                        <p class="text-gray-300 text-sm">Conversations about daily life, innovation, and culture across
-                            the African continent, challenging stereotypes.</p>
-                    </div>
-                    <div class="artifact-card rounded-xl p-6 hover-lift">
-                        <h5 class="text-xl font-bold text-white mb-2">African Tech Roundup</h5>
-                        <p class="text-gray-400 mb-2">Technology & Innovation</p>
-                        <p class="text-gray-300 text-sm">Showcasing Africa's thriving tech ecosystem, startups, and
-                            digital transformation across the continent.</p>
-                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 border-t border-gray-800 py-12">
-        <div class="max-w-6xl mx-auto px-6 text-center">
-            <p class="text-gray-400 mb-4">IC 420: Society and Culture in Africa - Summative Project E-Portfolio</p>
-            <p class="text-gray-500 text-sm">Created with passion for learning and deep respect for African cultures and
-                peoples</p>
-            <div class="mt-6">
-                <a href="#hero" class="text-[#f7931a] hover:text-[#ffd700] transition-colors duration-300">Back to Top
-                    ↑</a>
-            </div>
-        </div>
+    <footer class="bg-gray-900 text-center py-8 border-t border-gray-800">
+        <p class="text-gray-500 text-sm">&copy; 2025 IC 420 E-Portfolio. All rights reserved.</p>
+        <p class="text-gray-500 text-sm mt-2">Hosted on GitHub Pages & Embedded via Google Sites.</p>
     </footer>
 
-    <!-- Parallax Scroll Script -->
-    <script>
-        // Parallax effect for hero section
-        window.addEventListener('scroll', function () {
-            const scrolled = window.pageYOffset;
-            const heroParallax = document.getElementById('hero-parallax');
-
-            if (heroParallax) {
-                const parallaxSpeed = 0.5;
-                heroParallax.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
-            }
-
-            // Parallax for section dividers
-            const dividers = document.querySelectorAll('.section-divider.parallax');
-            dividers.forEach(divider => {
-                const rect = divider.getBoundingClientRect();
-                const scrollPercent = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-
-                if (scrollPercent >= 0 && scrollPercent <= 1) {
-                    const yPos = -(scrollPercent * 50);
-                    divider.style.backgroundPositionY = `${yPos}%`;
-                }
-            });
-        });
-
-        // Smooth scroll enhancement
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const offsetTop = target.offsetTop - 80; // Account for fixed nav
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Add scroll-based animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver(function (entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe all artifact cards and reflection sections
-        document.querySelectorAll('.artifact-card, .reflection-section').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
-    </script>
 </body>
 
 </html>
