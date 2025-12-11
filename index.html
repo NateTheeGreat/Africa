@@ -92,9 +92,84 @@
         .group:hover .image-overlay {
             opacity: 1;
         }
+
+        /* Scroll animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .animate-fade-in {
+            opacity: 0;
+            transition: opacity 1s ease-out;
+        }
+
+        .animate-fade-in.animated {
+            opacity: 1;
+        }
+
+        .animate-slide-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .animate-slide-left.animated {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .animate-slide-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .animate-slide-right.animated {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .animate-scale {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .animate-scale.animated {
+            opacity: 1;
+            transform: scale(1);
+        }
     </style>
 
     <script>
+        // Scroll animation observer
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all elements with animation classes
+            document.querySelectorAll('.animate-on-scroll, .animate-fade-in, .animate-slide-left, .animate-slide-right, .animate-scale').forEach(el => {
+                observer.observe(el);
+            });
+        });
+
         function scrollToSection(id) {
             const element = document.getElementById(id);
             if (element) {
@@ -152,16 +227,16 @@
 
     <section id="about" class="py-24 bg-gradient-to-b from-gray-900 to-black">
         <div class="max-w-5xl mx-auto px-6">
-            <div class="text-center mb-16">
+            <div class="text-center mb-16 animate-fade-in">
                 <h2 class="text-5xl font-black mb-4 gradient-text">About Me</h2>
                 <div class="w-24 h-1 bg-[#f7931a] mx-auto rounded-full"></div>
             </div>
 
             <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
+                <div class="animate-slide-left">
                     <img src="assets/about-me.jpg" alt="Student portrait" class="rounded-2xl shadow-2xl hover-lift">
                 </div>
-                <div>
+                <div class="animate-slide-right">
                     <h3 class="text-3xl font-bold mb-6 text-[#f7931a]">Nathaniel Deryl - Bridging Tech and African
                         Markets</h3>
                     <p class="text-gray-300 text-lg leading-relaxed mb-6">
@@ -196,7 +271,7 @@
     <section id="lo1" class="py-24 bg-black">
         <div class="max-w-7xl mx-auto px-6">
             <!-- Header -->
-            <div class="text-center mb-20">
+            <div class="text-center mb-20 animate-fade-in">
                 <h2 class="text-6xl font-black mb-6 gradient-text">Learning Outcome 1</h2>
                 <h3 class="text-4xl font-bold text-white mb-6">Beyond the Stereotypes</h3>
                 <div class="w-32 h-1.5 bg-gradient-to-r from-[#f7931a] to-[#ffd700] mx-auto rounded-full mb-8"></div>
@@ -206,7 +281,7 @@
             </div>
 
             <!-- Nairobi - Full Width Image with Overlay -->
-            <div class="mb-20">
+            <div class="mb-20 animate-on-scroll">
                 <div class="relative rounded-3xl overflow-hidden shadow-2xl group">
                     <img src="https://images.unsplash.com/photo-1611348524140-53c9a25263d6?w=1600&q=80" alt="Nairobi"
                         class="w-full h-[700px] object-cover">
@@ -229,7 +304,7 @@
             </div>
 
             <!-- M-Pesa - Full Width Image with Overlay -->
-            <div class="mb-20">
+            <div class="mb-20 animate-on-scroll">
                 <div class="relative rounded-3xl overflow-hidden shadow-2xl group">
                     <img src="assets/mpesa.jpg"
                         alt="M-Pesa" class="w-full h-[700px] object-cover">
@@ -250,7 +325,7 @@
             </div>
 
             <!-- Wangari Maathai - Full Width Image with Overlay -->
-            <div class="mb-20">
+            <div class="mb-20 animate-on-scroll">
                 <div class="relative rounded-3xl overflow-hidden shadow-2xl group">
                     <img src="assets/wangari.jpg" alt="Wangari Maathai"
                         class="w-full h-[700px] object-cover">
@@ -272,7 +347,7 @@
 
             <!-- Key Insight -->
             <div
-                class="bg-gradient-to-br from-[#f7931a]/10 to-[#ffd700]/5 border border-[#f7931a]/30 rounded-2xl p-12 text-center">
+                class="bg-gradient-to-br from-[#f7931a]/10 to-[#ffd700]/5 border border-[#f7931a]/30 rounded-2xl p-12 text-center animate-scale">
                 <h4 class="text-3xl font-bold text-[#f7931a] mb-6">The Real Africa</h4>
                 <p class="text-gray-300 text-xl leading-relaxed max-w-4xl mx-auto">
                     These cities represent just a fraction of Africa's urban development. The "single story" of poverty
@@ -290,7 +365,7 @@
     <section id="lo2" class="py-24 bg-gradient-to-b from-gray-900 to-black">
         <div class="max-w-7xl mx-auto px-6">
             <!-- Header -->
-            <div class="text-center mb-20">
+            <div class="text-center mb-20 animate-fade-in">
                 <h2 class="text-6xl font-black mb-6 gradient-text">Learning Outcome 2</h2>
                 <h3 class="text-4xl font-bold text-white mb-6">Urbanization in Africa</h3>
                 <div class="w-32 h-1.5 bg-gradient-to-r from-[#f7931a] to-[#ffd700] mx-auto rounded-full mb-8"></div>
@@ -300,7 +375,7 @@
             </div>
 
             <!-- Point 1: Rapid Urbanization Without Industrialization -->
-            <div class="mb-24">
+            <div class="mb-24 animate-on-scroll">
                 <div class="relative rounded-3xl overflow-hidden shadow-2xl group">
                     <img src="assets/lagos-street.jpg" alt="Lagos Street" class="w-full h-[700px] object-cover">
                     <div
@@ -328,7 +403,7 @@
             </div>
 
             <!-- Supporting Image for Point 1 -->
-            <div class="mb-32">
+            <div class="mb-32 animate-on-scroll">
                 <div class="relative rounded-3xl overflow-hidden shadow-2xl group">
                     <img src="assets/urban-market.jpg" alt="Urban Market" class="w-full h-[600px] object-cover">
                     <div
@@ -348,7 +423,7 @@
             </div>
 
             <!-- Point 2: Colonial Legacies in Urban Planning -->
-            <div class="mb-24">
+            <div class="mb-24 animate-on-scroll">
                 <div class="relative rounded-3xl overflow-hidden shadow-2xl group">
                     <img src="assets/african-crowd.jpg" alt="Urban Population" class="w-full h-[700px] object-cover">
                     <div
@@ -377,7 +452,7 @@
             </div>
 
             <!-- Supporting Image for Point 2 -->
-            <div class="mb-24">
+            <div class="mb-24 animate-on-scroll">
                 <div class="relative rounded-3xl overflow-hidden shadow-2xl group">
                     <img src="assets/lagos-street.jpg" alt="Urban Infrastructure" class="w-full h-[600px] object-cover">
                     <div
@@ -397,7 +472,7 @@
             </div>
 
             <!-- Key Insight -->
-            <div class="bg-gradient-to-br from-[#f7931a]/10 to-[#ffd700]/5 border border-[#f7931a]/30 rounded-2xl p-12">
+            <div class="bg-gradient-to-br from-[#f7931a]/10 to-[#ffd700]/5 border border-[#f7931a]/30 rounded-2xl p-12 animate-scale">
                 <h4 class="text-3xl font-bold text-[#f7931a] mb-6 text-center">The Connection</h4>
                 <p class="text-gray-300 text-xl leading-relaxed max-w-5xl mx-auto mb-6">
                     Africa's rapid urbanization without industrialization is shaped by colonial urban planning legacies.
@@ -419,7 +494,7 @@
 
     <section id="recommendations" class="py-24 bg-black">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
+            <div class="text-center mb-16 animate-fade-in">
                 <h2 class="text-5xl font-black mb-4 gradient-text">More on Africa</h2>
                 <h3 class="text-3xl font-bold text-gray-300 mb-4">Music & Movies</h3>
                 <div class="w-24 h-1 bg-[#f7931a] mx-auto rounded-full"></div>
@@ -429,7 +504,7 @@
             </div>
 
             <!-- Nasty C Music Section - Spotify Inspired -->
-            <div class="mb-24">
+            <div class="mb-24 animate-on-scroll">
                 <h4 class="text-4xl font-bold text-white mb-2 flex items-center">
                     <span class="mr-4">🎵</span> Featured Artist
                 </h4>
@@ -538,7 +613,7 @@
             </div>
 
             <!-- African Movies Section -->
-            <div class="mb-16">
+            <div class="mb-16 animate-on-scroll">
                 <h4 class="text-4xl font-bold text-white mb-2 flex items-center">
                     <span class="mr-4">🎬</span> African Cinema
                 </h4>
@@ -547,7 +622,7 @@
                 <div class="grid md:grid-cols-3 gap-8">
                     <!-- Blood and Water -->
                     <div
-                        class="group relative rounded-2xl overflow-hidden hover-lift bg-gradient-to-b from-gray-900 to-black border border-gray-800 hover:border-[#f7931a] transition-all duration-300">
+                        class="group relative rounded-2xl overflow-hidden hover-lift bg-gradient-to-b from-gray-900 to-black border border-gray-800 hover:border-[#f7931a] transition-all duration-300 animate-on-scroll">
                         <div class="aspect-[2/3] overflow-hidden">
                             <img src="assets/blood-and-water.jpg" alt="Blood and Water"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
@@ -574,7 +649,7 @@
 
                     <!-- Nairobi Half Life -->
                     <div
-                        class="group relative rounded-2xl overflow-hidden hover-lift bg-gradient-to-b from-gray-900 to-black border border-gray-800 hover:border-[#f7931a] transition-all duration-300">
+                        class="group relative rounded-2xl overflow-hidden hover-lift bg-gradient-to-b from-gray-900 to-black border border-gray-800 hover:border-[#f7931a] transition-all duration-300 animate-on-scroll">
                         <div class="aspect-[2/3] overflow-hidden">
                             <img src="assets/nairobi-half-life.jpg" alt="Nairobi Half Life"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
@@ -601,7 +676,7 @@
 
                     <!-- Sense8 -->
                     <div
-                        class="group relative rounded-2xl overflow-hidden hover-lift bg-gradient-to-b from-gray-900 to-black border border-gray-800 hover:border-[#f7931a] transition-all duration-300">
+                        class="group relative rounded-2xl overflow-hidden hover-lift bg-gradient-to-b from-gray-900 to-black border border-gray-800 hover:border-[#f7931a] transition-all duration-300 animate-on-scroll">
                         <div class="aspect-[2/3] overflow-hidden">
                             <img src="assets/sense8.jpg" alt="Sense8"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
