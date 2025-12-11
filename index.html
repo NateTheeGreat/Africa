@@ -82,6 +82,16 @@
             background: linear-gradient(to bottom, rgba(17, 24, 39, 0.95), rgba(31, 41, 55, 0.95));
             border-left: 4px solid #f7931a;
         }
+
+        /* Image hover overlay effect */
+        .image-overlay {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .group:hover .image-overlay {
+            opacity: 1;
+        }
     </style>
 
     <script>
@@ -201,7 +211,7 @@
                     <img src="https://images.unsplash.com/photo-1611348524140-53c9a25263d6?w=1600&q=80" alt="Nairobi"
                         class="w-full h-[700px] object-cover">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent flex items-end">
+                        class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent flex items-end image-overlay">
                         <div class="p-16 max-w-4xl">
                             <h4 class="text-6xl font-black text-white mb-4">Nairobi</h4>
                             <p class="text-[#f7931a] text-3xl font-bold mb-6">The Silicon Savannah</p>
@@ -224,7 +234,7 @@
                     <img src="https://images.unsplash.com/photo-1577948000111-9c970dfe3743?w=1600&q=80"
                         alt="Johannesburg" class="w-full h-[700px] object-cover">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent flex items-end">
+                        class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent flex items-end image-overlay">
                         <div class="p-16 max-w-4xl">
                             <h4 class="text-6xl font-black text-white mb-4">Johannesburg</h4>
                             <p class="text-[#f7931a] text-3xl font-bold mb-6">Economic Powerhouse</p>
@@ -249,7 +259,7 @@
                     <img src="assets/wangari.jpg" alt="Wangari Maathai"
                         class="w-full h-[700px] object-cover">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent flex items-end">
+                        class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent flex items-end image-overlay">
                         <div class="p-16 max-w-4xl">
                             <h4 class="text-6xl font-black text-white mb-4">Wangari Maathai</h4>
                             <p class="text-[#f7931a] text-3xl font-bold mb-6">Environmental Champion & Nobel Laureate</p>
